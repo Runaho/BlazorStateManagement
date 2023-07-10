@@ -1,0 +1,20 @@
+﻿@inject MessageState MessageState
+<h3>Shared</h3>
+<EditForm Model="@newMessage" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="newMessage.FullName" placeholder="Full Name" />
+    <InputText @bind-Value="newMessage.Text" placeholder="Text"/>
+
+    <button type="submit">Submit</button>
+</EditForm>
+@code {
+    private Message newMessage = new();
+
+    private void HandleValidSubmit()
+    {
+        MessageState.SendMessage(newMessage);
+    }
+
+}

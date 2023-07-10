@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/BlazorStateManagement-Web.props" />
+</Project>

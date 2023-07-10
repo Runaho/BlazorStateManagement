@@ -1,0 +1,54 @@
+@inject MessageState MessageState
+@implements IDisposable
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Sender</th>
+            <th scope="col">Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in messages)
+        {
+            <tr @key="message">
+                <td>@message.FullName</td>
+                <td>@message.Text</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    List<Message> messages { get; set; } = new List<Message>();
+
+    protected override void OnInitialized()
+    {
+        MessageState.OnChange += StateHasChanged;
+        //MessageState.OnChange += OnMyChangeHandler;
+
+        base.OnInitialized();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        messages = MessageState.GetMessages();
+        StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        MessageState.OnChange -= StateHasChanged;
+        //MessageState.OnChange -= OnMyChangeHandler;
+    }
+
+    private async void OnMyChangeHandler()
+    {
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+}
