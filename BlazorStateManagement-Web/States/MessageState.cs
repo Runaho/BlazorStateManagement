@@ -13,6 +13,8 @@ public class MessageState
     Microsoft.AspNetCore.Components.dll but was not handled in user code: 
     'The current thread is not associated with the Dispatcher. Use InvokeAsync() to switch execution 
     to the Dispatcher when triggering rendering or component state.'
+    ** If you are creating a single instance, you need to use invoke async. Otherwise you will get an error.
+    Check the Shared/ListMessages.razor : 46
     */
     private void NotifyStateChanged() => OnChange?.Invoke();
 
